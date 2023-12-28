@@ -71,7 +71,7 @@ func (card *Card) List(c *gin.Context) {
 	desc := c.Query("desc")
 	fmt.Println(desc)
 
-	global.Backend_DB.Model(&model.Cards{}).Where("`openid`=? and `describe`=?", openid, desc).Order("id desc").Find(&cardModels)
+	global.Backend_DB.Model(&model.Cards{}).Where("`openid`=? and `describe`like ?", openid, "%"+desc+"%").Order("id desc").Limit(50).Find(&cardModels)
 
 	c.JSON(http.StatusOK, gin.H{"list": cardModels, "headeropenid": openid})
 	return

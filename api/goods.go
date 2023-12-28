@@ -37,7 +37,7 @@ func (u *GoodsStruct) Goods(c *gin.Context) {
 	openid := c.GetHeader("openid")
 
 	query := global.Backend_DB.Model(&Goods).Order("id desc").Where("openid=?", openid).Where("name like ?  or remark like ?", "%"+name+"%", "%"+name+"%")
-	query.Find(&GoodsArr)
+	query.Limit(50).Find(&GoodsArr)
 	fmt.Println(GoodsArr)
 	c.JSON(0, GoodsArr)
 }

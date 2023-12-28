@@ -151,6 +151,7 @@ func test3() {
 	log.Println("邮件发送成功！")
 }
 func (cl Clock) Add(c *gin.Context) {
+	fmt.Println(time.Now())
 	fmt.Println("天机-入口")
 	loc, err1 := time.LoadLocation("Asia/Shanghai")
 	if err1 != nil {
@@ -205,7 +206,7 @@ func (cl Clock) List(c *gin.Context) {
 	//remark := c.Query("remark")
 	//fmt.Println(name, remark)
 	query := global.Backend_DB.Model(&Clocks).Order("id desc").Where("openid=?", openid).Where("`describe` like ? or `title` like ?", "%"+name+"%", "%"+name+"%")
-	query.Find(&ClocksArr)
+	query.Limit(50).Find(&ClocksArr)
 	fmt.Println(ClocksArr)
 	c.JSON(0, ClocksArr)
 }
