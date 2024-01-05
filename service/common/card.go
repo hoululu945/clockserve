@@ -66,6 +66,6 @@ func (card CardService) Long(openid string, c *gin.Context) string {
 		maxNum = continuousCount
 		global.Backend_DB.Save(&cardmodel)
 	}
-	sprintf := fmt.Sprintf("连续打卡 %d 天,最多连续打卡次数%d次", continuousCount, maxNum)
+	sprintf := fmt.Sprintf("当前连续打卡%d 次历史最多连续打卡%d次", continuousCount, maxNum)
 	return sprintf
 }

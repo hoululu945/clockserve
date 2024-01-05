@@ -102,8 +102,8 @@ func (u *UsersStruct) MiniLogin(c *gin.Context) {
 	}
 	var user model.Users
 	json.Unmarshal(body, &user)
-	user.NickName = req.UserInfo.NickName
-	user.AvatarUrl = req.UserInfo.AvatarURL
+	//user.NickName = req.UserInfo.NickName
+	//user.AvatarUrl = req.UserInfo.AvatarURL
 
 	where := map[string]string{"mini_openid": user.MiniOpenid}
 	err = global.Backend_DB.Order("id desc").First(&user, where).Error
@@ -131,4 +131,28 @@ func (u *UsersStruct) MiniLogin(c *gin.Context) {
 		map[string]string{"openid": user.MiniOpenid, "email": user.Email, "nickName": user.NickName},
 		"ss",
 	})
+
+}
+
+func (u *UsersStruct) Detail(c *gin.Context) {
+	openid := c.GetHeader("openid")
+	var userModel model.Users
+	global.Backend_DB.Where("mini_openid=?", openid).First(&userModel)
+	c.JSON(http.StatusOK, userModel)
+	return
+
+}
+func (u *UsersStruct) Update(c *gin.Context) {
+	userInfo := map[string]interface{}{}
+	c.ShouldBindJSON(&userInfo)
+	fmt.Println(userInfo)
+
+	openid := c.GetHeader("openid")
+	userModel := model.Users{}
+	userModel.NickName = userInfo["nickName"].(string)
+	userModel.AvatarUrl = userInfo["avatarUrl"].(string)
+	global.Backend_DB.Where("mini_openid=?", openid).Updates(&userModel)
+	c.JSON(http.StatusOK, gin.H{})
+	return
+
 }

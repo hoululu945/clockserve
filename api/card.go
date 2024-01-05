@@ -34,7 +34,7 @@ func (card *Card) Add(c *gin.Context) {
 	var count int64
 	global.Backend_DB.Model(&cardModel).Where("openid=?", openid).Count(&count)
 	count++
-	mess := "已经打卡" + strconv.Itoa(int(count)) + "次数，再接再厉"
+	//mess := "已经打卡" + strconv.Itoa(int(count)) + "次数，再接再厉"
 	//longmess := common.Cardinstance.Long(openid, c)
 	fmt.Println(count, "tiaoshu")
 	if err = global.Backend_DB.Create(&cardModel).Error; err == nil {
@@ -51,14 +51,14 @@ func (card *Card) Add(c *gin.Context) {
 			"time2": common.SubscribeMessage{
 				Value: date,
 			},
-			"thing3": common.SubscribeMessage{
+			"thing4": common.SubscribeMessage{
+				Value: "记录点滴",
+			},
+			"thing11": common.SubscribeMessage{
 				Value: longmess,
 			},
-			"thing4": common.SubscribeMessage{
-				Value: mess,
-			},
 		}
-		common.CommonService.PubTem(c, data, "_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig")
+		common.CommonService.PubTem(c, data, "VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE")
 	}
 
 	c.JSON(http.StatusOK, gin.H{"openid": "sssss"})

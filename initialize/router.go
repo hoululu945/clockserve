@@ -14,6 +14,8 @@ func Routers() *gin.Engine {
 	GoodsRouter := router.RouterApp.GoodsRouter
 	CardRouter := router.RouterApp.CardRouter
 	ClockRouter := router.RouterApp.ClockRouter
+	SettingRouter := router.RouterApp.SettingRouter
+
 	Router := gin.New()
 	store := cookie.NewStore([]byte("secret"))
 	Router.Use(sessions.Sessions("mysession", store))
@@ -23,5 +25,7 @@ func Routers() *gin.Engine {
 	UserRouter.InitUserRouter(PublicGroup)
 	CardRouter.InitCardRouter(PublicGroup)
 	ClockRouter.InitClockRouter(PublicGroup)
+
+	SettingRouter.InitSettingRouter(PublicGroup)
 	return Router
 }

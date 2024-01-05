@@ -112,22 +112,16 @@ func (com *commonStruct) PubClock(clock *model.Clocks) {
 	date := clock.TipTime.Format("2006-01-02 15:04:05")
 	data := map[string]SubscribeMessage{
 		"thing1": SubscribeMessage{
-			Value: "日程提醒",
-		},
-		"date2": SubscribeMessage{
-			Value: date,
+			Value: clock.Title,
 		},
 		"thing3": SubscribeMessage{
 			Value: clock.Describe,
 		},
-		"thing4": SubscribeMessage{
-			Value: "愿你一天好心情",
-		},
-		"thing5": SubscribeMessage{
-			Value: "怕水的鱼",
+		"time5": SubscribeMessage{
+			Value: date,
 		},
 	}
-	com.PubTemCron(data, "WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84", clock.Openid)
+	com.PubTemCron(data, "XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk", clock.Openid)
 }
 func (com *commonStruct) PubTemCron(data map[string]SubscribeMessage, temp_id string, openid string) {
 
