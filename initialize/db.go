@@ -11,6 +11,7 @@ import (
 )
 
 func InitMysql() *gorm.DB {
+
 	dsn := "houguo:10220917@tcp(154.83.15.174:3306)/inventory?charset=utf8&parseTime=True"
 	//dsn := "root:root@tcp(127.0.0.1:3306)/inventory?charset=utf8&parseTime=True"
 	//open := mysql.Open("houguo:10220917@tcp(154.83.15.174:3306)/inventory?charset=utf8&parseTime=True&loc=Local")
