@@ -186,6 +186,10 @@ func (cl Clock) Add(c *gin.Context) {
 	openid := c.GetHeader("openid")
 	Clocks.Openid = openid
 	Clocks.Title = ClocksMap["title"].(string)
+	fmt.Println(ClocksMap)
+	s := ClocksMap["reminderType"].(string)
+	atoi, _ := strconv.Atoi(s)
+	Clocks.ReminderType = atoi
 	err = global.Backend_DB.Create(&Clocks).Error
 	duration := tipTimeDate.Sub(now)
 	fmt.Println(tipTimeDate, now)

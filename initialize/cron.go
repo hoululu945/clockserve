@@ -146,6 +146,25 @@ func googleSendMail(clock *model.Clocks) {
 	if err != nil {
 		fmt.Println("邮件发失败！" + err.Error())
 	}
+	reminderType := clock.ReminderType
+	if reminderType != 0 && clock.IsCircle == 1 {
+		duration := time.Second
+		switch reminderType {
+		case 1:
+			duration = 24 * 60 * 60 * time.Second
+		case 2:
+			duration = 24 * 60 * 60 * 7 * time.Second
+		case 3:
+			duration = 24 * 60 * 60 * 30 * time.Second
+		case 4:
+			duration = 24 * 60 * 60 * 365 * time.Second
+		}
+		err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+		fmt.Println("添加新的循环成功成功！", duration)
+
+	}
+
+	fmt.Println("err----", err)
 
 	fmt.Println("邮件发送成功！")
 }
