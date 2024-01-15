@@ -12,4 +12,5 @@ func (s *SettingRouter) InitSettingRouter(group *gin.RouterGroup) {
 	group.POST("setting/add", api.SettingApi.Add)
 	group.GET("setting/list", api.SettingApi.List)
 	group.GET("setting/get", api.SettingApi.Get)
+	group.GET("setting/weather", api.SettingApi.Weather)
 }

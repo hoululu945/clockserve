@@ -3,6 +3,7 @@ module serve
 go 1.20
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-sql-driver/mysql v1.7.1
@@ -14,6 +15,7 @@ require (
 )
 
 require (
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
