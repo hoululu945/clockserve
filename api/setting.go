@@ -66,7 +66,7 @@ func (s *Setting) Weather(c *gin.Context) {
 	sons := make([]sonWeather, 0)
 	url := "https://www.tianqi.com/"
 	//city := "hefei"
-	days := "/7/"
+	days := "/40/"
 	openid := c.GetHeader("openid")
 	settingModel.Openid = openid
 	global.Backend_DB.Order("id asc").Find(&settingModel)
@@ -133,19 +133,19 @@ func (s *Setting) Weather(c *gin.Context) {
 func (s *Setting) weatherImage(str string) string {
 	var imageHash string
 	if strings.Contains(str, "多云") {
-		imageHash = "Fkib9lDKhNl7a6XReSEU6Bf9eXaE"
+		imageHash = "微信图片_20240116145431.png"
 	}
 	if strings.Contains(str, "晴") {
-		imageHash = "FuqF97dr2Xwbi5RIDP_ExZPN0s4x"
+		imageHash = "微信图片_20240116145508.png"
 	}
 	if strings.Contains(str, "雪") {
-		imageHash = "FjrG7YRbW--8Pj8YT5YpgCr-WxAa"
+		imageHash = "微信图片_20240116145515.png"
 	}
 	if strings.Contains(str, "阴") {
-		imageHash = "FvLOo0uk_xzgi577Hkz2Icw_uglz"
+		imageHash = "微信图片_20240116145422.png"
 	}
 	if strings.Contains(str, "雨") {
-		imageHash = "FiUowFjrv0WWfAGQHu2SfOPSeOEk"
+		imageHash = "微信图片_20240116145447.png"
 	}
 	return "http://s687dm7qx.hn-bkt.clouddn.com/" + imageHash
 }
