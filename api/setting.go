@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/mozillazg/go-pinyin"
 )
 
 type Setting struct {
@@ -47,6 +48,7 @@ type sonWeather struct {
 	Title string
 	Date  string
 	Cloud string
+	Image string
 }
 type weather struct {
 	Title        string
@@ -56,15 +58,31 @@ type weather struct {
 }
 
 func (s *Setting) Weather(c *gin.Context) {
+	city := c.Query("city")
+	fmt.Println("city", city)
+
 	var weatherInfo weather
+	var settingModel model2.Setting
 	sons := make([]sonWeather, 0)
 	url := "https://www.tianqi.com/"
-	city := "hefei"
+	//city := "hefei"
 	days := "/7/"
-
+	openid := c.GetHeader("openid")
+	settingModel.Openid = openid
+	global.Backend_DB.Order("id asc").Find(&settingModel)
+	if city == "" {
+		city = settingModel.Area
+	}
+	fmt.Println(city)
+	convert := pinyin.Convert(city, nil)
+	var strSlice []string
+	for _, subSlice := range convert {
+		strSlice = append(strSlice, strings.Join(subSlice, ""))
+	}
+	cityPinyin := strings.Join(strSlice, "")
 	// 发送HTTP GET请求
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", url+city+days, nil)
+	req, err := http.NewRequest("GET", url+cityPinyin+days, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,15 +103,16 @@ func (s *Setting) Weather(c *gin.Context) {
 		weatherInfo.TodayWeather = strings.ReplaceAll(strings.ReplaceAll(doc.Find("div.weaone_ba").Text(), " ", ""), "\n", "")
 		weatherInfo.TodayDate = strings.ReplaceAll(strings.ReplaceAll(doc.Find("div.weaone_bb").Text(), " ", ""), "\n", "")
 		//allwea := strings.TrimSpace(doc.Find("ul.weaul li").Text())
-		doc.Find("ul.weaul li").Each(func(i int, s *goquery.Selection) {
+		doc.Find("ul.weaul li").Each(func(i int, ss *goquery.Selection) {
 			var son sonWeather
-			title := s.Find("a").AttrOr("title", "")
+			title := ss.Find("a").AttrOr("title", "")
 			son.Title = strings.ReplaceAll(strings.ReplaceAll(title, " ", ""), "\n", "")
-			date := s.Find("a div.weaul_q").Text()
+			date := ss.Find("a div.weaul_q").Text()
 			son.Date = strings.ReplaceAll(strings.ReplaceAll(date, " ", ""), "\n", "")
 
-			cloud := s.Find("a div.weaul_z").Text()
+			cloud := ss.Find("a div.weaul_z").Text()
 			son.Cloud = strings.ReplaceAll(strings.ReplaceAll(cloud, " ", ""), "\n", "")
+			son.Image = s.weatherImage(son.Cloud)
 			sons = append(sons, son)
 			// Extract the text or attribute values from each <li> element
 			//text := s.Text()
@@ -109,4 +128,24 @@ func (s *Setting) Weather(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, weatherInfo)
 	return
+}
+
+func (s *Setting) weatherImage(str string) string {
+	var imageHash string
+	if strings.Contains(str, "多云") {
+		imageHash = "Fkib9lDKhNl7a6XReSEU6Bf9eXaE"
+	}
+	if strings.Contains(str, "晴") {
+		imageHash = "FuqF97dr2Xwbi5RIDP_ExZPN0s4x"
+	}
+	if strings.Contains(str, "雪") {
+		imageHash = "FjrG7YRbW--8Pj8YT5YpgCr-WxAa"
+	}
+	if strings.Contains(str, "阴") {
+		imageHash = "FvLOo0uk_xzgi577Hkz2Icw_uglz"
+	}
+	if strings.Contains(str, "雨") {
+		imageHash = "FiUowFjrv0WWfAGQHu2SfOPSeOEk"
+	}
+	return "http://s687dm7qx.hn-bkt.clouddn.com/" + imageHash
 }

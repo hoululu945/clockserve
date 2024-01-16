@@ -9,4 +9,5 @@ type Setting struct {
 	ImageUrl string `json:"imageUrl" gorm:"type:varchar(100);comment:图片"`
 	Type     int64  `json:"type" gorm:"comment:1开屏"`
 	Openid   string `json:"openid" gorm:"type:varchar(100);comment:小程序openid"`
+	Area     string `json:"area" gorm:"type:varchar(100);comment:地区;default:合肥"`
 }
