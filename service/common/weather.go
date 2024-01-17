@@ -80,14 +80,6 @@ func (w *weatherStruct) Weather(days string) weather {
 		//allwea := strings.TrimSpace(doc.Find("ul.weaul li").Text())
 		doc.Find("ul.weaul li").Each(func(i int, ss *goquery.Selection) {
 			var son sonWeather
-			//var title string
-			//ss.Find(".weaul_q span").Each(func(i int, sss *goquery.Selection) {
-			//	// 处理找到的每个span元素
-			//	// 这里可以编写你的逻辑代码
-			//	fmt.Println("***", sss.Text())
-			//	title += sss.Text()
-			//})
-			//ttt := ss.Find(".weaul_q weaul_qblue span").Text()
 			title := ss.Find("a").AttrOr("title", "")
 			son.Title = strings.ReplaceAll(strings.ReplaceAll(title, " ", ""), "\n", "")
 			date := ss.Find("a div.weaul_q").Text()
@@ -97,12 +89,6 @@ func (w *weatherStruct) Weather(days string) weather {
 			son.Cloud = strings.ReplaceAll(strings.ReplaceAll(cloud, " ", ""), "\n", "")
 			son.Image = w.weatherImage(son.Cloud)
 			sons = append(sons, son)
-			// Extract the text or attribute values from each <li> element
-			//text := s.Text()
-			//href, _ := s.Attr("href")
-			//
-			//// Print the extracted values
-			//fmt.Printf("Text: %s, Href: %s\n", text, href)
 		})
 		weatherInfo.Sons = sons
 
@@ -165,7 +151,7 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	Clocks1.Describe = clockData.Describe
 	Clocks1.TipImage = clockData.TipImage
 	Clocks1.Openid = clockData.Openid
-	Clocks1.Title = clockData.Title
+	Clocks1.Title = "明天" + clockData.Title
 	Clocks1.ReminderType = 0
 	err = global.Backend_DB.Create(&Clocks1).Error
 	duration := tipTimeDate1.Sub(now)
@@ -177,6 +163,8 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	Clocks2.TipTime = tipTimeDate2
 	Clocks2.ReminderType = 0
 	Clocks2.ID = 0
+	Clocks2.Title = "今天" + clockData.Title
+
 	err = global.Backend_DB.Create(&Clocks2).Error
 	fmt.Println(Clocks2)
 	duration2 := tipTimeDate2.Sub(now)

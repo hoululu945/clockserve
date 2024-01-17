@@ -21,27 +21,27 @@ func cronTime() {
 func weathertitle(str string) string {
 	var title string
 	if strings.Contains(str, "雨") {
-		title = "今天有雨记得带伞"
+		title = "有雨出门记得带伞"
 		if strings.Contains(str, "中雨") {
-			title = "今天有中雨记得带伞"
+			title = "有中雨出门记得带伞"
 		}
 		if strings.Contains(str, "大雨") {
-			title = "今天有大雨记得带伞"
+			title = "有大雨出门记得带伞"
 		}
 		if strings.Contains(str, "暴雨") {
-			title = "今天有暴雨记得带伞"
+			title = "有暴雨出门记得带伞"
 		}
 	}
 	if strings.Contains(str, "雪") {
-		title = "今天有雪记得带伞"
+		title = "有雪出门记得带伞"
 		if strings.Contains(str, "中雪") {
-			title = "今天有中雪记得带伞"
+			title = "有中雪出门记得带伞"
 		}
 		if strings.Contains(str, "大雪") {
-			title = "今天有大雪记得带伞"
+			title = "有大雪出门记得带伞"
 		}
 		if strings.Contains(str, "暴雪") {
-			title = "今天有暴雪记得带伞"
+			title = "有暴雪出门记得带伞"
 		}
 	}
 
@@ -51,14 +51,14 @@ func weathertitle(str string) string {
 func weatherTip() {
 	c := cron.New()
 
-	c.AddFunc("@every 5s", func() {
+	c.AddFunc("0 22 * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		var clock model.Clocks
 		clock.TipImage = weather.Sons[0].Image
 		clock.Openid = ""
 		clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
-		clock.Title = weather.Sons[0].Title
+		clock.Title = weathertitle(weather.Sons[0].Cloud)
 		var users []model.Users
 		global.Backend_DB.Find(&users)
 		for _, v := range users {
@@ -75,7 +75,7 @@ func weatherTip() {
 func InitCron() {
 	//go runScheduledTask()
 	//go runCron()
-	//go cronTime()
+	go cronTime()
 	go subRedisKeyExpir()
 }
 
