@@ -105,7 +105,16 @@ func (s *Setting) Weather(c *gin.Context) {
 		//allwea := strings.TrimSpace(doc.Find("ul.weaul li").Text())
 		doc.Find("ul.weaul li").Each(func(i int, ss *goquery.Selection) {
 			var son sonWeather
-			title := ss.Find("a").AttrOr("title", "")
+			var title string
+			ss.Find(".weaul_q span").Each(func(i int, sss *goquery.Selection) {
+				// 处理找到的每个span元素
+				// 这里可以编写你的逻辑代码
+				fmt.Println("***", sss.Text())
+				title += sss.Text()
+			})
+			//ttt := ss.Find(".weaul_q weaul_qblue span").Text()
+			fmt.Println("sssssssss")
+			//title := ss.Find("a").AttrOr("title", "")
 			son.Title = strings.ReplaceAll(strings.ReplaceAll(title, " ", ""), "\n", "")
 			date := ss.Find("a div.weaul_q").Text()
 			son.Date = strings.ReplaceAll(strings.ReplaceAll(date, " ", ""), "\n", "")
