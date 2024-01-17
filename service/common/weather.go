@@ -1,48 +1,23 @@
-package api
+package common
 
 import (
+	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/mozillazg/go-pinyin"
 	"log"
 	"net/http"
 	"serve/global"
 	model2 "serve/model"
+	"strconv"
 	"strings"
-
-	"github.com/PuerkitoBio/goquery"
-	"github.com/mozillazg/go-pinyin"
+	"time"
 )
 
-type Setting struct {
+type weatherStruct struct {
 }
 
-var SettingApi Setting
-
-func (s *Setting) List(c *gin.Context) {
-
-	fmt.Println("开屏")
-	settingModel := model2.Setting{}
-
-	global.Backend_DB.Where("type=1").First(&settingModel)
-	c.JSON(http.StatusOK, settingModel)
-	return
-
-}
-func (s *Setting) Get(c *gin.Context) {
-
-	fmt.Println("开屏")
-	settingModel := model2.Setting{}
-
-	global.Backend_DB.Where("type=1").First(&settingModel)
-	c.JSON(http.StatusOK, settingModel)
-	return
-
-}
-
-func (s *Setting) Add(c *gin.Context) {
-
-	fmt.Println("开屏")
-}
+var WeatherService weatherStruct
 
 type sonWeather struct {
 	Title string
@@ -57,8 +32,8 @@ type weather struct {
 	Sons         []sonWeather
 }
 
-func (s *Setting) Weather(c *gin.Context) {
-	city := c.Query("city")
+func (w *weatherStruct) Weather(days string) weather {
+	city := "瑶海"
 	fmt.Println("city", city)
 
 	var weatherInfo weather
@@ -66,9 +41,9 @@ func (s *Setting) Weather(c *gin.Context) {
 	sons := make([]sonWeather, 0)
 	url := "https://www.tianqi.com/"
 	//city := "hefei"
-	days := "/40/"
-	openid := c.GetHeader("openid")
-	settingModel.Openid = openid
+	//days := "/40/"
+	//openid := c.GetHeader("openid")
+	//settingModel.Openid = openid
 	global.Backend_DB.Order("id asc").Find(&settingModel)
 	if city == "" {
 		city = settingModel.Area
@@ -113,7 +88,6 @@ func (s *Setting) Weather(c *gin.Context) {
 			//	title += sss.Text()
 			//})
 			//ttt := ss.Find(".weaul_q weaul_qblue span").Text()
-
 			title := ss.Find("a").AttrOr("title", "")
 			son.Title = strings.ReplaceAll(strings.ReplaceAll(title, " ", ""), "\n", "")
 			date := ss.Find("a div.weaul_q").Text()
@@ -121,7 +95,7 @@ func (s *Setting) Weather(c *gin.Context) {
 
 			cloud := ss.Find("a div.weaul_z").Text()
 			son.Cloud = strings.ReplaceAll(strings.ReplaceAll(cloud, " ", ""), "\n", "")
-			son.Image = s.weatherImage(son.Cloud)
+			son.Image = w.weatherImage(son.Cloud)
 			sons = append(sons, son)
 			// Extract the text or attribute values from each <li> element
 			//text := s.Text()
@@ -135,11 +109,11 @@ func (s *Setting) Weather(c *gin.Context) {
 	} else {
 		fmt.Println("Failed to retrieve weather information.")
 	}
-	c.JSON(http.StatusOK, weatherInfo)
-	return
+
+	return weatherInfo
 }
 
-func (s *Setting) weatherImage(str string) string {
+func (w *weatherStruct) weatherImage(str string) string {
 	var imageHash string
 	if strings.Contains(str, "多云") {
 		imageHash = "微信图片_20240116145431.png"
@@ -157,4 +131,56 @@ func (s *Setting) weatherImage(str string) string {
 		imageHash = "微信图片_20240116145447.png"
 	}
 	return "http://s687dm7qx.hn-bkt.clouddn.com/" + imageHash
+}
+
+func (w *weatherStruct) Add(clockData model2.Clocks) {
+	loc, err1 := time.LoadLocation("Asia/Shanghai")
+	if err1 != nil {
+		fmt.Println("无法加载时区:", err1)
+		return
+	}
+
+	// 获取当前本地时间并转换为北京时间
+	now := time.Now().In(loc)
+	// 输出结果
+	fmt.Println("当前北京时间:", now)
+	var Clocks1 model2.Clocks
+	var Clocks2 model2.Clocks
+
+	tipTimeStr1 := time.Now().Format("2006-01-02") + " 22:00:00"
+	tipTimeStr2 := time.Now().Add(11*time.Hour).Format("2006-01-02") + " 02:00:00"
+	fmt.Println(tipTimeStr1, tipTimeStr2)
+	localTimezone := "Asia/Shanghai"
+	loc, err := time.LoadLocation(localTimezone)
+	if err != nil {
+		fmt.Println("无法加载时区:", err)
+		return
+	}
+
+	// 解析时间字符串为本地时间
+	tipTimeDate1, err := time.ParseInLocation("2006-01-02 15:04:05", tipTimeStr1, loc)
+	tipTimeDate2, err := time.ParseInLocation("2006-01-02 15:04:05", tipTimeStr2, loc)
+
+	Clocks1.TipTime = tipTimeDate1
+	Clocks1.Describe = clockData.Describe
+	Clocks1.TipImage = clockData.TipImage
+	Clocks1.Openid = clockData.Openid
+	Clocks1.Title = clockData.Title
+	Clocks1.ReminderType = 0
+	err = global.Backend_DB.Create(&Clocks1).Error
+	duration := tipTimeDate1.Sub(now)
+	fmt.Println(duration)
+	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks1.ID)), Clocks1.ID, duration).Err()
+	//第二天提醒
+	fmt.Println(Clocks1)
+	Clocks2 = Clocks1
+	Clocks2.TipTime = tipTimeDate2
+	Clocks2.ReminderType = 0
+	Clocks2.ID = 0
+	err = global.Backend_DB.Create(&Clocks2).Error
+	fmt.Println(Clocks2)
+	duration2 := tipTimeDate2.Sub(now)
+	fmt.Println(duration2)
+	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks1.ID, duration).Err()
+
 }

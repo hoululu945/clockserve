@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 	"log"
 	"net/smtp"
 	"serve/global"
@@ -15,9 +15,67 @@ import (
 	"time"
 )
 
+func cronTime() {
+	weatherTip()
+}
+func weathertitle(str string) string {
+	var title string
+	if strings.Contains(str, "雨") {
+		title = "今天有雨记得带伞"
+		if strings.Contains(str, "中雨") {
+			title = "今天有中雨记得带伞"
+		}
+		if strings.Contains(str, "大雨") {
+			title = "今天有大雨记得带伞"
+		}
+		if strings.Contains(str, "暴雨") {
+			title = "今天有暴雨记得带伞"
+		}
+	}
+	if strings.Contains(str, "雪") {
+		title = "今天有雪记得带伞"
+		if strings.Contains(str, "中雪") {
+			title = "今天有中雪记得带伞"
+		}
+		if strings.Contains(str, "大雪") {
+			title = "今天有大雪记得带伞"
+		}
+		if strings.Contains(str, "暴雪") {
+			title = "今天有暴雪记得带伞"
+		}
+	}
+
+	return title
+}
+
+func weatherTip() {
+	c := cron.New()
+
+	c.AddFunc("@every 5s", func() {
+
+		weather := common.WeatherService.Weather("/7/")
+		var clock model.Clocks
+		clock.TipImage = weather.Sons[0].Image
+		clock.Openid = ""
+		clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
+		clock.Title = weather.Sons[0].Title
+		var users []model.Users
+		global.Backend_DB.Find(&users)
+		for _, v := range users {
+			clock.Openid = v.MiniOpenid
+			common.WeatherService.Add(clock)
+		}
+		//fmt.Println("tick every 1 second", weather.Sons[0])
+
+	})
+
+	c.Start()
+	time.Sleep(time.Second * 5)
+}
 func InitCron() {
 	//go runScheduledTask()
 	//go runCron()
+	//go cronTime()
 	go subRedisKeyExpir()
 }
 
