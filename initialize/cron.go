@@ -80,6 +80,7 @@ func weatherTip() {
 func InitCron() {
 	//go runScheduledTask()
 	//go runCron()
+	//定时任务
 	go cronTime()
 	go subRedisKeyExpir()
 }
