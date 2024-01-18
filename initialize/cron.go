@@ -51,20 +51,25 @@ func weathertitle(str string) string {
 func weatherTip() {
 	c := cron.New()
 
-	c.AddFunc("0 22 * * *", func() {
+	c.AddFunc("0 20 * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		var clock model.Clocks
 		clock.TipImage = weather.Sons[0].Image
 		clock.Openid = ""
 		clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
-		clock.Title = weathertitle(weather.Sons[0].Cloud)
-		var users []model.Users
-		global.Backend_DB.Find(&users)
-		for _, v := range users {
-			clock.Openid = v.MiniOpenid
-			common.WeatherService.Add(clock)
+		title := weathertitle(weather.Sons[0].Cloud)
+		if title != "" {
+			clock.Title = title
+
+			var users []model.Users
+			global.Backend_DB.Find(&users)
+			for _, v := range users {
+				clock.Openid = v.MiniOpenid
+				common.WeatherService.Add(clock)
+			}
 		}
+
 		//fmt.Println("tick every 1 second", weather.Sons[0])
 
 	})
