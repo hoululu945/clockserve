@@ -51,22 +51,25 @@ func weathertitle(str string) string {
 func weatherTip() {
 	c := cron.New()
 
-	c.AddFunc("0 20 * * *", func() {
+	c.AddFunc("*/1 * * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
-		var clock model.Clocks
-		clock.TipImage = weather.Sons[0].Image
-		clock.Openid = ""
-		clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
-		title := weathertitle(weather.Sons[0].Cloud)
-		if title != "" {
-			clock.Title = title
+		fmt.Println("获取天气长度----", len(weather.Sons))
+		if len(weather.Sons) >= 1 {
+			var clock model.Clocks
+			clock.TipImage = weather.Sons[0].Image
+			clock.Openid = ""
+			clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
+			title := weathertitle(weather.Sons[0].Cloud)
+			if title != "" {
+				clock.Title = title
 
-			var users []model.Users
-			global.Backend_DB.Find(&users)
-			for _, v := range users {
-				clock.Openid = v.MiniOpenid
-				common.WeatherService.Add(clock)
+				var users []model.Users
+				global.Backend_DB.Find(&users)
+				for _, v := range users {
+					clock.Openid = v.MiniOpenid
+					common.WeatherService.Add(clock)
+				}
 			}
 		}
 
