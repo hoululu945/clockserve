@@ -69,7 +69,7 @@ func weatherTip() {
 	}
 	c := cron.New(cron.WithLocation(loc))
 
-	c.AddFunc("*/1 * * * *", func() {
+	c.AddFunc("0 20 * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
