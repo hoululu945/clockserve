@@ -201,17 +201,7 @@ func (cl Clock) Add(c *gin.Context) {
 }
 
 func (cl Clock) List(c *gin.Context) {
-	str := "多云转阴0~2"
-	s := strings.Split(str, "")
-	index := 0
-	for k, v := range s {
-		if v == "~" {
-			index = k + 1
-			break
-		}
-	}
-	atoi, _ := strconv.Atoi(s[index])
-	fmt.Println(atoi)
+
 	var Clocks model.Clocks
 	var ClocksArr []model.Clocks
 	name := c.Query("name")
