@@ -49,18 +49,23 @@ func weathertitle(str string) string {
 }
 
 func weatherTip() {
-	c := cron.New()
+	loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
+	if err != nil {
+		fmt.Println("加载时区失败:", err)
+		return
+	}
+	c := cron.New(cron.WithLocation(loc))
 
-	c.AddFunc("0 20 * * *", func() {
+	c.AddFunc("*/1 * * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
 		if len(weather.Sons) >= 1 {
 			var clock model.Clocks
-			clock.TipImage = weather.Sons[0].Image
+			clock.TipImage = weather.Sons[1].Image
 			clock.Openid = ""
-			clock.Describe = weather.Sons[0].Date + "" + weather.Sons[0].Cloud
-			title := weathertitle(weather.Sons[0].Cloud)
+			clock.Describe = weather.Sons[1].Date + "" + weather.Sons[1].Cloud
+			title := weathertitle(weather.Sons[1].Cloud)
 			if title != "" {
 				clock.Title = title
 

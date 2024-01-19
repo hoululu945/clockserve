@@ -133,8 +133,8 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	var Clocks1 model2.Clocks
 	var Clocks2 model2.Clocks
 
-	tipTimeStr1 := time.Now().Format("2006-01-02") + " 22:00:00"
-	tipTimeStr2 := time.Now().Add(24*time.Hour).Format("2006-01-02") + " 07:00:00"
+	tipTimeStr1 := time.Now().In(loc).Format("2006-01-02") + " 22:00:00"
+	tipTimeStr2 := time.Now().In(loc).Add(24*time.Hour).Format("2006-01-02") + " 07:00:00"
 	fmt.Println(tipTimeStr1, tipTimeStr2)
 	localTimezone := "Asia/Shanghai"
 	loc, err := time.LoadLocation(localTimezone)
