@@ -20,28 +20,41 @@ func cronTime() {
 }
 func weathertitle(str string) string {
 	var title string
+
+	s := strings.Split(str, "")
+	index := 0
+	for k, v := range s {
+		if v == "~" {
+			index = k + 1
+			break
+		}
+	}
+	temper, _ := strconv.Atoi(s[index])
+	if temper <= 2 {
+		title += "温度低于3度记得加衣 "
+	}
 	if strings.Contains(str, "雨") {
-		title = "有雨出门记得带伞"
+		title += "有雨出门记得带伞"
 		if strings.Contains(str, "中雨") {
-			title = "有中雨出门记得带伞"
+			title += "有中雨出门记得带伞"
 		}
 		if strings.Contains(str, "大雨") {
-			title = "有大雨出门记得带伞"
+			title += "有大雨出门记得带伞"
 		}
 		if strings.Contains(str, "暴雨") {
-			title = "有暴雨出门记得带伞"
+			title += "有暴雨出门记得带伞"
 		}
 	}
 	if strings.Contains(str, "雪") {
-		title = "有雪出门记得带伞"
+		title += "有雪出门记得带伞"
 		if strings.Contains(str, "中雪") {
-			title = "有中雪出门记得带伞"
+			title += "有中雪出门记得带伞"
 		}
 		if strings.Contains(str, "大雪") {
-			title = "有大雪出门记得带伞"
+			title += "有大雪出门记得带伞"
 		}
 		if strings.Contains(str, "暴雪") {
-			title = "有暴雪出门记得带伞"
+			title += "有暴雪出门记得带伞"
 		}
 	}
 
