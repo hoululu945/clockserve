@@ -30,8 +30,13 @@ func weathertitle(str string) string {
 		}
 	}
 	temper, _ := strconv.Atoi(s[index])
+	temperLow, _ := strconv.Atoi(s[index-1])
+
 	if temper <= 2 {
 		title += "温度低于3度记得加衣 "
+	}
+	if temperLow < 0 {
+		title += " 最低温度温度低于0度记得加衣 "
 	}
 	if strings.Contains(str, "雨") {
 		title += "有雨出门记得带伞"
