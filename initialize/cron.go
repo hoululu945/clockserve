@@ -70,7 +70,7 @@ func weatherTip() {
 				clock.Title = title
 
 				var users []model.Users
-				global.Backend_DB.Find(&users)
+				global.Backend_DB.Limit(1).Find(&users)
 				for _, v := range users {
 					clock.Openid = v.MiniOpenid
 					common.WeatherService.Add(clock)
