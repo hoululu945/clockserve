@@ -169,6 +169,6 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	fmt.Println(Clocks2)
 	duration2 := tipTimeDate2.Sub(now)
 	fmt.Println(duration2)
-	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks1.ID, duration).Err()
+	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks1.ID, duration2).Err()
 
 }
