@@ -1,0 +1,258 @@
+nohup: ignoring input
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.376ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[3.312ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[2.910ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory' AND table_name = 'goods' AND table_type = 'BASE TABLE'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.093ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.554ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.324ms] [34;1m[rows:-][0m SELECT * FROM `goods` LIMIT 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.687ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory' AND table_name = 'goods' ORDER BY ORDINAL_POSITION
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.129ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.587ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.579ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory' AND table_name = 'goods' AND index_name = 'idx_goods_deleted_at'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.091ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.598ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.123ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.152ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.480ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.788ms] [34;1m[rows:-][0m SELECT * FROM `users` LIMIT 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.587ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.194ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.612ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[2.270ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.140ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.649ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.056ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory' AND table_name = 'cards' AND table_type = 'BASE TABLE'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.148ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.505ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.305ms] [34;1m[rows:-][0m SELECT * FROM `cards` LIMIT 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.140ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory' AND table_name = 'cards' ORDER BY ORDINAL_POSITION
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.128ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.485ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.110ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory' AND table_name = 'cards' AND index_name = 'idx_cards_deleted_at'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.112ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.432ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.949ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory' AND table_name = 'clocks' AND table_type = 'BASE TABLE'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.101ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.446ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.398ms] [34;1m[rows:-][0m SELECT * FROM `clocks` LIMIT 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.249ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory' AND table_name = 'clocks' ORDER BY ORDINAL_POSITION
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.131ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.586ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.046ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory' AND table_name = 'clocks' AND index_name = 'idx_clocks_deleted_at'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.096ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.524ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.889ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'inventory' AND table_name = 'settings' AND table_type = 'BASE TABLE'
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.118ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.505ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.442ms] [34;1m[rows:-][0m SELECT * FROM `settings` LIMIT 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.638ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'inventory' AND table_name = 'settings' ORDER BY ORDINAL_POSITION
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[0.174ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[4.888ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'inventory%' ORDER BY SCHEMA_NAME='inventory' DESC,SCHEMA_NAME limit 1
+
+2024/01/18 11:06:54 [32m/var/www/miniTool/serve/initialize/gorm.go:11
+[0m[33m[1.744ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'inventory' AND table_name = 'settings' AND index_name = 'idx_settings_deleted_at'
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/goods/add            --> serve/api.(*GoodsStruct).InitGoods-fm (2 handlers)
+[GIN-debug] GET    /api/goods/list           --> serve/api.(*GoodsStruct).Goods-fm (2 handlers)
+[GIN-debug] GET    /api/goods/test           --> serve/api.(*GoodsStruct).Test-fm (2 handlers)
+[GIN-debug] POST   /api/goodsImage/upload    --> serve/api.(*GoodsStruct).UploadFile-fm (2 handlers)
+[GIN-debug] POST   /api/login                --> serve/router.GoodsRouter.InitGoodsRouter.func1 (2 handlers)
+[GIN-debug] POST   /api/user/add             --> serve/api.(*UsersStruct).Add-fm (2 handlers)
+[GIN-debug] POST   /api/user/miniLogin       --> serve/api.(*UsersStruct).MiniLogin-fm (2 handlers)
+[GIN-debug] GET    /api/user/clock           --> serve/api.(*UsersStruct).ClockAdd-fm (2 handlers)
+[GIN-debug] GET    /api/user/clockSet        --> serve/api.(*UsersStruct).ClockSave-fm (2 handlers)
+[GIN-debug] GET    /api/user/setEmail        --> serve/api.(*UsersStruct).SetEmail-fm (2 handlers)
+[GIN-debug] GET    /api/user/detail          --> serve/api.(*UsersStruct).Detail-fm (2 handlers)
+[GIN-debug] POST   /api/user/update          --> serve/api.(*UsersStruct).Update-fm (2 handlers)
+[GIN-debug] POST   /api/card/add             --> serve/api.(*Card).Add-fm (2 handlers)
+[GIN-debug] GET    /api/card/list            --> serve/api.(*Card).List-fm (2 handlers)
+[GIN-debug] GET    /api/card/detail          --> serve/api.(*Card).Detail-fm (2 handlers)
+[GIN-debug] GET    /api/qiniu/token          --> serve/api/common.Qiniu.GetToken-fm (2 handlers)
+[GIN-debug] POST   /api/clock/add            --> serve/api.Clock.Add-fm (2 handlers)
+[GIN-debug] GET    /api/clock/list           --> serve/api.Clock.List-fm (2 handlers)
+[GIN-debug] POST   /api/setting/add          --> serve/api.(*Setting).Add-fm (2 handlers)
+[GIN-debug] GET    /api/setting/list         --> serve/api.(*Setting).List-fm (2 handlers)
+[GIN-debug] GET    /api/setting/get          --> serve/api.(*Setting).Get-fm (2 handlers)
+[GIN-debug] GET    /api/setting/weather      --> serve/api.(*Setting).Weather-fm (2 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8082
+键过期事件: clock_id:8245
+[clock_id 8245]
+
+2024/01/18 14:17:02 [32m/var/www/miniTool/serve/initialize/cron.go:148
+[0m[33m[2.855ms] [34;1m[rows:1][0m SELECT * FROM `clocks` WHERE `id` = 8245 AND `clocks`.`deleted_at` IS NULL ORDER BY `clocks`.`id` LIMIT 1
+redis--token
+{"access_token":"76_Kpy41YGkLsbklusiw3HCale9dkZrTX1C7lujT1awIC-AeDu2hfCsD-ofP12TQve18pn4fmWgqThY-djYjl15dBO8_cd8b0yl6w07MONhwFl2pxm9tExD6nHkmsANYFgACAVGN","expires_in":7200}------------
+map[access_token:76_Kpy41YGkLsbklusiw3HCale9dkZrTX1C7lujT1awIC-AeDu2hfCsD-ofP12TQve18pn4fmWgqThY-djYjl15dBO8_cd8b0yl6w07MONhwFl2pxm9tExD6nHkmsANYFgACAVGN expires_in:]
+access_tokencacheset----------- 76_Kpy41YGkLsbklusiw3HCale9dkZrTX1C7lujT1awIC-AeDu2hfCsD-ofP12TQve18pn4fmWgqThY-djYjl15dBO8_cd8b0yl6w07MONhwFl2pxm9tExD6nHkmsANYFgACAVGN
+response-token76_Kpy41YGkLsbklusiw3HCale9dkZrTX1C7lujT1awIC-AeDu2hfCsD-ofP12TQve18pn4fmWgqThY-djYjl15dBO8_cd8b0yl6w07MONhwFl2pxm9tExD6nHkmsANYFgACAVGN
+{"touser":"otdDm4pgjleTdkH7WfTaXh7JytBc","template_id":"XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk","page":"pages/cardList/cardList","miniprogram_state":"developer","data":{"thing1":{"value":"回家以后跟房东说"},"thing3":{"value":""},"time5":{"value":"2024-01-18 06:17:00"}}}
+{"errcode":47003,"errmsg":"argument invalid! data.thing3.value is empty rid: 65a8c25f-05d57c1d-5d3e162c"} 订阅消息发送成功
+
+2024/01/18 14:17:03 [32m/var/www/miniTool/serve/initialize/cron.go:151
+[0m[33m[22.883ms] [34;1m[rows:1][0m UPDATE `clocks` SET `id`=8245,`created_at`='2024-01-18 06:14:21.731',`updated_at`='2024-01-18 06:17:03.601',`deleted_at`=NULL,`title`='回家以后跟房东说',`describe`='',`tip_time`='2024-01-18 06:17:00',`openid`='otdDm4pgjleTdkH7WfTaXh7JytBc',`tip_image`='http://s687dm7qx.hn-bkt.clouddn.com/FiUowFjrv0WWfAGQHu2SfOPSeOEk',`is_tip`=1,`is_circle`=1,`reminder_type`=0 WHERE `clocks`.`deleted_at` IS NULL AND `id` = 8245
+开始发了google*****************************
+
+2024/01/18 14:17:03 [32m/var/www/miniTool/serve/initialize/cron.go:164
+[0m[33m[1.758ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `mini_openid` = 'otdDm4pgjleTdkH7WfTaXh7JytBc' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+err---- <nil>
+邮件发送成功！
+city 瑶海
+
+2024/01/18 20:00:00 [32m/var/www/miniTool/serve/service/common/weather.go:47
+[0m[33m[4.057ms] [34;1m[rows:1][0m SELECT * FROM `settings` WHERE `settings`.`deleted_at` IS NULL ORDER BY id asc
+瑶海
+Failed to retrieve weather information.
+获取天气长度---- 0
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a951dc-0f7e94b6-4a13ea9e"}******************
+{"access_token":"76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgKCCbACAFXX","expires_in":7200}------------
+map[errcode: errmsg:missing code, rid: 65a951dc-0f7e94b6-4a13ea9e]
+map[access_token:76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgKCCbACAFXX expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a951dc-4106f7f1-2639950d"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a951dc-14350429-4e70205f"}******************
+{"access_token":"76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgAEQbACARVH","expires_in":7199}------------
+map[errcode: errmsg:missing code, rid: 65a951dc-14350429-4e70205f]
+map[access_token:76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgAEQbACARVH expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a951dd-3f658281-2056e4dd"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a951dd-1d37b265-5051e812"}******************
+{"access_token":"76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgCGQbACAYCM","expires_in":7199}------------
+map[errcode: errmsg:missing code, rid: 65a951dd-1d37b265-5051e812]
+map[access_token:76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgCGQbACAYCM expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a951dd-229e77c9-1063a874"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a951dd-00a4fe44-1fdcbee0"}******************
+{"access_token":"76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgYPMbACAIZW","expires_in":7198}------------
+map[errcode: errmsg:missing code, rid: 65a951dd-00a4fe44-1fdcbee0]
+map[access_token:76_rX6MU5WMF91t5ogSd2jA0Im_KO3U0Q0bgJkLvetM-aFrKgx-Bo25vTA04dUAWq9HMy6lJi6nDR-0WBOXc_SKI9lsRD9TzWyO8IihfJyPkwztKOSI1gyRPTqCeUgYPMbACAIZW expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a951de-68f2b59b-35193815"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a9be3b-6ea7347e-698bcda7"}******************
+{"access_token":"76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIQUVaAFAEIJ","expires_in":7200}------------
+map[errcode: errmsg:missing code, rid: 65a9be3b-6ea7347e-698bcda7]
+map[access_token:76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIQUVaAFAEIJ expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a9be3b-18838374-62d9a139"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a9be3c-30df7cb2-055b0eb9"}******************
+{"access_token":"76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIKFMaAFACXE","expires_in":7199}------------
+map[errcode: errmsg:missing code, rid: 65a9be3c-30df7cb2-055b0eb9]
+map[access_token:76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIKFMaAFACXE expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a9be3c-00eea2b7-26df771d"} 订阅消息发送成功
+{ { }}
+{"errcode":41008,"errmsg":"missing code, rid: 65a9be3c-561f5363-7f79a36b"}******************
+{"access_token":"76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIQEOaAFAGUE","expires_in":7198}------------
+map[errcode: errmsg:missing code, rid: 65a9be3c-561f5363-7f79a36b]
+map[access_token:76_fcy8R_A97C7engClpczmCIQQEeLlwFZwcbQhaqGsg-KNBObMGMAEKMp44aewYbqBukAZ-RJmceGg0gQlRq5Kp3D_O2ZSHzaLW4-QOmfrj-6qGq4eHLTN-wQR9QIQEOaAFAGUE expires_in:]
+{"errcode":40003,"errmsg":"invalid openid rid: 65a9be3d-5d5a57cc-6ec24eef"} 订阅消息发送成功
+city 瑶海
+[mysql] 2024/01/19 20:00:00 packets.go:122: closing bad idle connection: unexpected read from socket
+
+2024/01/19 20:00:00 [32m/var/www/miniTool/serve/service/common/weather.go:47
+[0m[33m[11.333ms] [34;1m[rows:1][0m SELECT * FROM `settings` WHERE `settings`.`deleted_at` IS NULL ORDER BY id asc
+瑶海
+Failed to retrieve weather information.
+获取天气长度---- 0
