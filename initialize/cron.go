@@ -109,8 +109,38 @@ func InitCron() {
 	//定时任务
 	go cronTime()
 	go subRedisKeyExpir()
+	go everySecond()
 }
+func everySecond() {
+	loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
+	if err != nil {
+		fmt.Println("加载时区失败:", err)
+		return
+	}
+	c := cron.New(cron.WithLocation(loc))
 
+	c.AddFunc("*/1 * * * *", func() {
+
+	})
+
+	var Clocks model.Clocks
+	var Clocks2 model.Clocks
+
+	location, _ := time.LoadLocation("Asia/Shanghai")
+	now := time.Now().Add(24 * time.Hour).In(location)
+	tipTimeDate := now.Format("2006-01-02")
+
+	global.Backend_DB.Where("tip_time>? and is_tip=? and type=?", tipTimeDate+" 22:00::00", 0, 1).Find(&Clocks)
+	global.Backend_DB.Where("tip_time>? and is_tip=? and type=?", tipTimeDate+" 07:00::00", 0, 1).Find(&Clocks2)
+	if Clocks2.ID != 0 {
+		googleSendMail(&Clocks2)
+
+	}
+	if Clocks.ID != 0 {
+		googleSendMail(&Clocks)
+
+	}
+}
 func runScheduledTask() {
 	for {
 		// 定时任务的逻辑
@@ -255,7 +285,8 @@ func googleSendMail(clock *model.Clocks) {
 	}
 
 	fmt.Println("err----", err)
-
+	clock.IsTip = 1
+	global.Backend_DB.Save(clock)
 	fmt.Println("邮件发送成功！")
 }
 

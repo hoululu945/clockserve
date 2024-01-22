@@ -153,6 +153,7 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	Clocks1.Openid = clockData.Openid
 	Clocks1.Title = "明天" + clockData.Title
 	Clocks1.ReminderType = 0
+	Clocks1.Type = 1
 	err = global.Backend_DB.Create(&Clocks1).Error
 	duration := tipTimeDate1.Sub(now)
 	fmt.Println(duration)
@@ -164,7 +165,7 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	Clocks2.ReminderType = 0
 	Clocks2.ID = 0
 	Clocks2.Title = "今天" + clockData.Title
-
+	Clocks2.Type = 1
 	err = global.Backend_DB.Create(&Clocks2).Error
 	fmt.Println(Clocks2)
 	duration2 := tipTimeDate2.Sub(now)
