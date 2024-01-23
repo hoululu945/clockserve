@@ -130,8 +130,8 @@ func everySecond() {
 		fmt.Println("begin**************")
 
 		var Clocks []model.Clocks
-		location, _ := time.LoadLocation("Asia/Shanghai")
-		now := time.Now().In(location)
+		//location, _ := time.LoadLocation("Asia/Shanghai")
+		now := time.Now()
 		tipTimeDate := now.Format("2006-01-02 15")
 
 		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
