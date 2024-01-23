@@ -15,6 +15,7 @@ func RegisterTables(db *gorm.DB) {
 		model.Cards{},
 		model.Clocks{},
 		model.Setting{},
+		model.RequestLog{},
 		//model.Language{},
 		//model.Authority{},
 		//model.Menu{},

@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"serve/api"
+	"serve/middleware"
 )
 
 type GoodsRouter struct {
@@ -33,12 +34,13 @@ type tocken struct {
 }
 
 func (u GoodsRouter) InitGoodsRouter(group *gin.RouterGroup) {
-	group.POST("goods/add", api.Goods.InitGoods)
-	group.GET("goods/list", api.Goods.Goods)
-	group.GET("goods/test", api.Goods.Test)
-	group.POST("goodsImage/upload", api.Goods.UploadFile)
-	//group.POST("goodsImage/upload", api.Goods.UploadFile)
-	group.POST("login", func(c *gin.Context) {
+	router := group.Use(middleware.RequestLoggerMiddleware())
+	router.POST("goods/add", api.Goods.InitGoods)
+	router.GET("goods/list", api.Goods.Goods)
+	router.GET("goods/test", api.Goods.Test)
+	router.POST("goodsImage/upload", api.Goods.UploadFile)
+	//router.POST("goodsImage/upload", api.Goods.UploadFile)
+	router.POST("login", func(c *gin.Context) {
 		var req LoginRequest
 		if err := c.BindJSON(&req); err != nil {
 			// 请求参数错误处理
