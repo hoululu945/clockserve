@@ -134,10 +134,10 @@ func everySecond() {
 
 		location, _ := time.LoadLocation("Asia/Shanghai")
 		now := time.Now().In(location)
-		tipTimeDate := now.Format("2006-01-02")
+		tipTimeDate := now.Format("2006-01-02 15")
 
-		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+" 22:00:00", 0, 1).Find(&Clocks)
-		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+" 07:00:00", 0, 1).Find(&Clocks2)
+		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
+		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks2)
 		fmt.Println(Clocks, Clocks2)
 		for _, v := range Clocks {
 			if v.ID != 0 {
