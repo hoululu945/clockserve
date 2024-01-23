@@ -1,7 +1,6 @@
 package common
 
 import (
-	"context"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/mozillazg/go-pinyin"
@@ -9,7 +8,6 @@ import (
 	"net/http"
 	"serve/global"
 	model2 "serve/model"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -157,7 +155,7 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	err = global.Backend_DB.Create(&Clocks1).Error
 	duration := tipTimeDate1.Sub(now)
 	fmt.Println(duration)
-	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks1.ID)), Clocks1.ID, duration).Err()
+	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks1.ID)), Clocks1.ID, duration).Err()
 	//第二天提醒
 	fmt.Println(Clocks1)
 	Clocks2 = Clocks1
@@ -170,6 +168,6 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	fmt.Println(Clocks2)
 	duration2 := tipTimeDate2.Sub(now)
 	fmt.Println(duration2)
-	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks2.ID, duration2).Err()
+	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks2.ID, duration2).Err()
 
 }

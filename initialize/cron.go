@@ -15,6 +15,9 @@ import (
 	"time"
 )
 
+var loc, _ = time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
+var c = cron.New(cron.WithLocation(loc))
+
 func cronTime() {
 	weatherTip()
 }
@@ -22,6 +25,7 @@ func weathertitle(str string) string {
 	var title string
 
 	s := strings.Split(str, "")
+	fmt.Println(s, "title((((")
 	index := 0
 	for k, v := range s {
 		if v == "~" {
@@ -30,13 +34,14 @@ func weathertitle(str string) string {
 		}
 	}
 	temper, _ := strconv.Atoi(s[index])
-	temperLow, _ := strconv.Atoi(s[index-1])
+	temperLow, _ := strconv.Atoi(s[index-2])
 
 	if temper <= 2 {
-		title += "温度低于3度记得加衣 "
+		title += "最高温度低于3度记得加衣 "
 	}
-	if temperLow < 0 {
-		title += " 最低温度温度低于0度记得加衣 "
+	fmt.Println(s[index-3], s[index-2], s[index-1], s[index], s[index+1], s, "**********************************")
+	if temperLow > 0 && s[index-3] == "-" {
+		title += fmt.Sprintf(" 最低温度零下%d摄氏度记得加衣 ", temperLow)
 	}
 	if strings.Contains(str, "雨") {
 		title += "有雨出门记得带伞"
@@ -67,28 +72,30 @@ func weathertitle(str string) string {
 }
 
 func weatherTip() {
-	loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
-	if err != nil {
-		fmt.Println("加载时区失败:", err)
-		return
-	}
-	c := cron.New(cron.WithLocation(loc))
+	//loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
+	//if err != nil {
+	//	fmt.Println("加载时区失败:", err)
+	//	return
+	//}
+	//c := cron.New(cron.WithLocation(loc))
 
-	c.AddFunc("0 20 * * *", func() {
+	c.AddFunc("0 22 * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
 		if len(weather.Sons) >= 1 {
 			var clock model.Clocks
+			fmt.Println(weather.Sons[1])
 			clock.TipImage = weather.Sons[1].Image
 			clock.Openid = ""
 			clock.Describe = weather.Sons[1].Date + "" + weather.Sons[1].Cloud
 			title := weathertitle(weather.Sons[1].Cloud)
+			fmt.Println("title--------" + title + "*****" + weather.Sons[1].Cloud)
 			if title != "" {
 				clock.Title = title
 
 				var users []model.Users
-				global.Backend_DB.Limit(1).Find(&users)
+				global.Backend_DB.Find(&users)
 				for _, v := range users {
 					clock.Openid = v.MiniOpenid
 					common.WeatherService.Add(clock)
@@ -112,34 +119,41 @@ func InitCron() {
 	go everySecond()
 }
 func everySecond() {
-	loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
-	if err != nil {
-		fmt.Println("加载时区失败:", err)
-		return
-	}
-	c := cron.New(cron.WithLocation(loc))
+	//loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
+	//if err != nil {
+	//	fmt.Println("加载时区失败:", err)
+	//	return
+	//}
+	//c := cron.New(cron.WithLocation(loc))
+	fmt.Println("begin**************")
+	c.AddFunc("@every 1m", func() {
+		fmt.Println("begin**************")
 
-	c.AddFunc("*/1 * * * *", func() {
+		var Clocks []model.Clocks
+		var Clocks2 []model.Clocks
+
+		location, _ := time.LoadLocation("Asia/Shanghai")
+		now := time.Now().In(location)
+		tipTimeDate := now.Format("2006-01-02")
+
+		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+" 22:00:00", 0, 1).Find(&Clocks)
+		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+" 07:00:00", 0, 1).Find(&Clocks2)
+		fmt.Println(Clocks, Clocks2)
+		for _, v := range Clocks {
+			if v.ID != 0 {
+				googleSendMail(&v)
+
+			}
+		}
+		for _, v := range Clocks2 {
+			if v.ID != 0 {
+				googleSendMail(&v)
+
+			}
+		}
 
 	})
 
-	var Clocks model.Clocks
-	var Clocks2 model.Clocks
-
-	location, _ := time.LoadLocation("Asia/Shanghai")
-	now := time.Now().Add(24 * time.Hour).In(location)
-	tipTimeDate := now.Format("2006-01-02")
-
-	global.Backend_DB.Where("tip_time>? and is_tip=? and type=?", tipTimeDate+" 22:00::00", 0, 1).Find(&Clocks)
-	global.Backend_DB.Where("tip_time>? and is_tip=? and type=?", tipTimeDate+" 07:00::00", 0, 1).Find(&Clocks2)
-	if Clocks2.ID != 0 {
-		googleSendMail(&Clocks2)
-
-	}
-	if Clocks.ID != 0 {
-		googleSendMail(&Clocks)
-
-	}
 }
 func runScheduledTask() {
 	for {
@@ -172,7 +186,7 @@ func rangeClock() {
 }
 func runCron() {
 	// 创建一个新的cron调度器
-	c := cron.New()
+	//c := cron.New()
 
 	// 添加定时任务
 	// 每分钟执行一次任务

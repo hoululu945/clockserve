@@ -9,7 +9,7 @@ type Clocks struct {
 	global.GVA_MODEL
 	Title        string    `json:"title" gorm:"type:varchar(100);comment:标题;" binding:"required"`
 	Describe     string    `json:"des" gorm:"type:varchar(100);comment:描述;" binding:"required"`
-	TipTime      time.Time `json:"tipTime" gorm:"comment:闹钟时间" binding:"required"`
+	TipTime      time.Time `json:"tipTime" gorm:"comment:闹钟时间;type:datetime" binding:"required"`
 	Openid       string    `json:"openid" gorm:"type:varchar(100);comment:小程序openid"`
 	TipImage     string    `json:"tipImage" gorm:"type:varchar(100);comment:闹钟图片"`
 	IsTip        int       `json:"isTip" gorm:"comment:是否提示1提示;default:0"`
