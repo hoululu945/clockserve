@@ -79,7 +79,7 @@ func weatherTip() {
 	//}
 	//c := cron.New(cron.WithLocation(loc))
 
-	c.AddFunc("0 22 * * *", func() {
+	c.AddFunc("0 20 * * *", func() {
 
 		weather := common.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
@@ -131,7 +131,8 @@ func everySecond() {
 
 		var Clocks []model.Clocks
 		location, _ := time.LoadLocation("Asia/Shanghai")
-		now := time.Now().In(location)
+		hours := -8 * time.Hour
+		now := time.Now().Add(hours).In(location)
 		tipTimeDate := now.Format("2006-01-02 15")
 
 		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
