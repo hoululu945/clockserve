@@ -133,19 +133,19 @@ func (s *Setting) Weather(c *gin.Context) {
 func (s *Setting) weatherImage(str string) string {
 	var imageHash string
 	if strings.Contains(str, "多云") {
-		imageHash = "微信图片_20240116145431.png"
+		imageHash = "duoyun.png"
 	}
 	if strings.Contains(str, "晴") {
-		imageHash = "微信图片_20240116145508.png"
+		imageHash = "qing.png"
 	}
 	if strings.Contains(str, "雪") {
-		imageHash = "微信图片_20240116145515.png"
+		imageHash = "xue.png"
 	}
 	if strings.Contains(str, "阴") {
-		imageHash = "微信图片_20240116145422.png"
+		imageHash = "yin.png"
 	}
 	if strings.Contains(str, "雨") {
-		imageHash = "微信图片_20240116145447.png"
+		imageHash = "yu.png"
 	}
-	return "http://s687dm7qx.hn-bkt.clouddn.com/" + imageHash
+	return "http://154.83.15.174/uploads/" + imageHash
 }
