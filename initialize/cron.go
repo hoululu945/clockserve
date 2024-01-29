@@ -114,7 +114,7 @@ func weatherTip() {
 
 func biaorefresh() {
 
-	c.AddFunc("* */1 * * *", func() {
+	c.AddFunc("0 */1 * * *", func() {
 
 		common.BiaoSerivce.AddNewBiao("食品")
 
