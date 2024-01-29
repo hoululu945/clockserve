@@ -6,6 +6,7 @@ type Router struct {
 	CardRouter
 	ClockRouter
 	SettingRouter
+	Biao
 }
 
 var RouterApp = new(Router)

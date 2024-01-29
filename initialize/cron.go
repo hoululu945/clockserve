@@ -12,6 +12,7 @@ import (
 	"serve/service/common"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -110,6 +111,50 @@ func weatherTip() {
 	c.Start()
 	time.Sleep(time.Second * 5)
 }
+
+func biaorefresh() {
+
+	c.AddFunc("* */1 * * *", func() {
+
+		common.BiaoSerivce.AddNewBiao("食品")
+
+	})
+
+	c.Start()
+	time.Sleep(time.Second * 5)
+}
+
+var mutex sync.Mutex // 互斥锁
+
+func biaoreTip() {
+
+	fmt.Println("beginbiao**************")
+	c.AddFunc("@every 1m", func() {
+		fmt.Println("beginbiao2**************")
+		var biao []model.Biao
+		global.Backend_DB.Where(" is_tip = ?", 0).Find(&biao)
+		fmt.Println("要提示的-biao", biao)
+		var m = make(map[string]int)
+		for _, v := range biao {
+			//key1 := "553844954@qq.com"+v.BiaoId
+			key2 := "houlu0621@163.com" + v.BiaoId
+			mutex.Lock()
+			if v.ID != 0 {
+				_, ok := m[key2]
+				if !ok {
+					googleBiaoSendMail(&v, "houlu0621@163.com")
+					//googleBiaoSendMail(&v, "553844954@qq.com")
+
+					m[key2] = 1
+				}
+
+			}
+			mutex.Unlock()
+
+		}
+
+	})
+}
 func InitCron() {
 	//go runScheduledTask()
 	//go runCron()
@@ -117,6 +162,8 @@ func InitCron() {
 	go cronTime()
 	go subRedisKeyExpir()
 	go everySecond()
+	go biaorefresh()
+	go biaoreTip()
 }
 func everySecond() {
 	//loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置
@@ -215,7 +262,65 @@ func subRedisKeyExpir() {
 	//subscribe.Close()
 	// 关闭订阅者
 }
+func googleBiaoSendMail(biao *model.Biao, email_cus string) {
 
+	// 邮箱账户信息
+	// 邮箱账户信息
+	email := "houll52120@gmail.com"
+	password := "zigseosjiqsvsfpd" // 应用密码，而不是邮箱账户密码
+
+	// 邮件配置
+	smtpHost := "smtp.gmail.com"
+	smtpPort := 587
+
+	// 邮件内容
+	from := email
+	to := email_cus
+	date := biao.Infodate.Format("2006-01-02 15:04:05")
+	subject := biao.Title + "--更新日期：" + date
+	body := biao.Content
+
+	// 邮箱账户信息
+
+	// 邮件配置
+
+	// 邮件内容
+
+	// 邮箱服务器地址
+	smtpServer := fmt.Sprintf("%s:%d", smtpHost, smtpPort)
+
+	// 邮件凭证
+	auth := smtp.PlainAuth("", email, password, smtpHost)
+
+	// 准备邮件内容
+	//message := []byte(fmt.Sprintf("To: %s\r\n"+
+	//	"Subject: %s\r\n"+
+	//	"\r\n"+
+	//	"%s\r\n", to, subject, body))
+	// 准备邮件头部
+	header := make(map[string]string)
+	header["From"] = from
+	header["To"] = to
+	header["Subject"] = encodeWord(subject) // 编码邮件标题
+	header["MIME-Version"] = "1.0"
+	header["Content-Type"] = "text/html; charset=UTF-8"
+
+	var msg strings.Builder
+	for k, v := range header {
+		msg.WriteString(fmt.Sprintf("%s: %s\r\n", k, v))
+	}
+	msg.WriteString("\r\n")
+	msg.WriteString(body)
+	// 发送邮件
+	err := smtp.SendMail(smtpServer, auth, from, []string{to}, []byte(msg.String()))
+	if err != nil {
+		fmt.Println("邮件发失败！" + err.Error())
+	}
+
+	biao.IsTip = 1
+	global.Backend_DB.Save(&biao)
+	fmt.Println("邮件发送成功！")
+}
 func googleSendMail(clock *model.Clocks) {
 	fmt.Println("开始发了google*****************************")
 	var user model.Users
