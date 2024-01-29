@@ -143,7 +143,7 @@ func biaoreTip() {
 				_, ok := m[key2]
 				if !ok {
 					googleBiaoSendMail(&v, "houlu0621@163.com")
-					//googleBiaoSendMail(&v, "553844954@qq.com")
+					googleBiaoSendMail(&v, "553844954@qq.com")
 
 					m[key2] = 1
 				}
