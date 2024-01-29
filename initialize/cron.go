@@ -136,7 +136,7 @@ func biaoreTip() {
 		fmt.Println("要提示的-biao", biao)
 		var m = make(map[string]int)
 		for _, v := range biao {
-			//key1 := "553844954@qq.com"+v.BiaoId
+			//key1 := "553844954@qq.com"+v.BiaoId11
 			key2 := "houlu0621@163.com" + v.BiaoId
 			mutex.Lock()
 			if v.ID != 0 {
