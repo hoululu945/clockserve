@@ -205,12 +205,13 @@ func (cl Clock) List(c *gin.Context) {
 	var Clocks model.Clocks
 	var ClocksArr []model.Clocks
 	name := c.Query("name")
-	openid := c.GetHeader("openid")
+	//openid := c.GetHeader("openid")
 
 	//remark := c.Query("remark")
 	//fmt.Println(name, remark)
-	query := global.Backend_DB.Model(&Clocks).Order("id desc").Where("openid=? and type=0", openid).Where("`describe` like ? or `title` like ?", "%"+name+"%", "%"+name+"%")
+	query := global.Backend_DB.Model(&Clocks).Order("id desc").Where("openid=? and type=0", "otdDm4pgjleTdkH7WfTaXh7JytBc").Where("`describe` like ? or `title` like ?", "%"+name+"%", "%"+name+"%")
 	query.Limit(50).Find(&ClocksArr)
 	fmt.Println(ClocksArr)
 	c.JSON(0, ClocksArr)
+	return
 }
