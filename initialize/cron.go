@@ -134,18 +134,19 @@ func biaoreTip() {
 		var biao []model.Biao
 		global.Backend_DB.Where(" is_tip = ?", 0).Find(&biao)
 		fmt.Println("要提示的-biao", biao)
-		var m = make(map[string]int)
+		//var m = make(map[string]int)
 		for _, v := range biao {
 			//key1 := "553844954@qq.com"+v.BiaoId11121
 			key2 := "houlu0621@163.com" + v.BiaoId
 			mutex.Lock()
 			if v.ID != 0 {
-				_, ok := m[key2]
-				if !ok {
+				//_, ok := m[key2]
+				nx := global.Backend_REDIS.SetNX(context.Background(), key2, 1, 0)
+				if nx.Val() {
 					googleBiaoSendMail(&v, "houlu0621@163.com")
-					googleBiaoSendMail(&v, "553844954@qq.com")
+					//googleBiaoSendMail(&v, "553844954@qq.com")
 
-					m[key2] = 1
+					//m[key2] = 1
 				}
 
 			}
