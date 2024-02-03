@@ -147,5 +147,5 @@ func (s *Setting) weatherImage(str string) string {
 	if strings.Contains(str, "雨") {
 		imageHash = "yu.png"
 	}
-	return "http://154.83.15.174/uploads/" + imageHash
+	return "http://houguo.online/uploads/" + imageHash
 }
