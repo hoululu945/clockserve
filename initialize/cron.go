@@ -138,7 +138,7 @@ func everySecond() {
 		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
 		for _, v := range Clocks {
 			if v.ID != 0 {
-				googleSendMail(&v)
+				sendEmail(&v)
 
 			}
 		}
@@ -208,7 +208,7 @@ func subRedisKeyExpir() {
 			clock.IsTip = 1
 			global.Backend_DB.Save(clock)
 			//sendEmail(&clock)
-			googleSendMail(&clock)
+			sendEmail(&clock)
 
 		}
 	}
