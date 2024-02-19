@@ -16,7 +16,8 @@ var tt *test
 
 func main() {
 
-	conn = initialize.InitMysql()
+	//conn = initialize.InitMysql()
+	conn = initialize.GormPgSql()
 	if conn != nil {
 		//conn.AutoMigrate(model.User{})
 		db, _ := conn.DB()
