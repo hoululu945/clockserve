@@ -332,6 +332,31 @@ func sendEmail(clock *model.Clocks) {
 		log.Println("邮件发送失败:", err)
 	}
 
+	reminderType := clock.ReminderType
+	if reminderType != 0 && clock.IsCircle == 1 {
+		duration := time.Second
+		switch reminderType {
+		case 1:
+			duration = 24 * 60 * 60 * time.Second
+		case 2:
+			duration = 24 * 60 * 60 * 7 * time.Second
+		case 3:
+			duration = 24 * 60 * 60 * 30 * time.Second
+		case 4:
+			duration = 24 * 60 * 60 * 365 * time.Second
+		}
+		err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+		fmt.Println("添加新的循环成功成功！", duration)
+
+	} else {
+		clock.IsTip = 1
+		global.Backend_DB.Save(clock)
+	}
+
+	fmt.Println("err----", err)
+	//clock.IsTip = 1
+	//global.Backend_DB.Save(clock)
+
 	log.Println("邮件发送成功！")
 
 	// 邮件参数
