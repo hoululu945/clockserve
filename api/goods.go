@@ -57,5 +57,5 @@ func (u *GoodsStruct) UploadFile(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "文件上传成功", "imageUrl": "http://154.83.15.174/uploads/" + file.Filename})
+	c.JSON(http.StatusOK, gin.H{"message": "文件上传成功", "imageUrl": "http://120.27.159.64/uploads/" + file.Filename})
 }
