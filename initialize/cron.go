@@ -348,10 +348,9 @@ func sendEmail(clock *model.Clocks) {
 		err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
 		fmt.Println("添加新的循环成功成功！", duration)
 
-	} else {
-		clock.IsTip = 1
-		global.Backend_DB.Save(clock)
 	}
+	clock.IsTip = 1
+	global.Backend_DB.Save(clock)
 
 	log.Println("邮件发送成功！")
 
