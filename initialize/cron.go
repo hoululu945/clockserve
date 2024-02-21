@@ -130,15 +130,15 @@ func everySecond() {
 		fmt.Println("begin**************")
 
 		var Clocks []model.Clocks
-		location, _ := time.LoadLocation("Asia/Shanghai")
-		hours := -8 * time.Hour
-		now := time.Now().Add(hours).In(location)
-		tipTimeDate := now.Format("2006-01-02 15")
+		//location, _ := time.LoadLocation("Asia/Shanghai")
+		//hours := -8 * time.Hour
+		//now := time.Now().Add(hours).In(location)
+		tipTimeDate := time.Now().Format("2006-01-02 15")
 
 		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
 		for _, v := range Clocks {
 			if v.ID != 0 {
-				googleSendMail(&v)
+				sendEmail(&v)
 
 			}
 		}
@@ -208,7 +208,7 @@ func subRedisKeyExpir() {
 			clock.IsTip = 1
 			global.Backend_DB.Save(clock)
 			//sendEmail(&clock)
-			googleSendMail(&clock)
+			sendEmail(&clock)
 
 		}
 	}
@@ -330,6 +330,27 @@ func sendEmail(clock *model.Clocks) {
 	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, []byte(body))
 	if err != nil {
 		log.Println("邮件发送失败:", err)
+	}
+
+	reminderType := clock.ReminderType
+	if reminderType != 0 && clock.IsCircle == 1 {
+		duration := time.Second
+		switch reminderType {
+		case 1:
+			duration = 24 * 60 * 60 * time.Second
+		case 2:
+			duration = 24 * 60 * 60 * 7 * time.Second
+		case 3:
+			duration = 24 * 60 * 60 * 30 * time.Second
+		case 4:
+			duration = 24 * 60 * 60 * 365 * time.Second
+		}
+		err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+		fmt.Println("添加新的循环成功成功！", duration)
+
+	} else {
+		clock.IsTip = 1
+		global.Backend_DB.Save(clock)
 	}
 
 	log.Println("邮件发送成功！")
