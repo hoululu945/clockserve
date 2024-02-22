@@ -190,8 +190,11 @@ func runCron() {
 }
 func subRedisKeyExpir() {
 	redis := global.Backend_REDIS
-	subscribe := redis.Subscribe(context.Background(), "__keyevent@*__:expired")
+	fmt.Println("键过期事件:订阅")
+
+	subscribe := redis.Subscribe(context.Background(), "__keyevent@0__:expired")
 	defer subscribe.Close()
+	fmt.Println("键过期事件:订阅2")
 
 	// 启动监听
 	for msg := range subscribe.Channel() {
