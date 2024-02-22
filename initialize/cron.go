@@ -311,7 +311,7 @@ func sendEmail(clock *model.Clocks) {
 	// 设置发件人、收件人和邮件内容
 	from := "1650221128@qq.com"
 	to := []string{user.Email}
-	subject := "闹钟提醒"
+	subject := clock.Title
 	message := clock.Describe
 
 	// 创建邮件内容
