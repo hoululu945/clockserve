@@ -192,7 +192,7 @@ func subRedisKeyExpir() {
 	redis := global.Backend_REDIS
 	fmt.Println("键过期事件:订阅")
 
-	subscribe := redis.Subscribe(context.Background(), "__keyevent@0__:expired")
+	subscribe := redis.Subscribe(context.Background(), "__keyevent@*__:expired")
 	defer subscribe.Close()
 	fmt.Println("键过期事件:订阅2")
 
