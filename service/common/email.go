@@ -16,11 +16,8 @@ type EmailInterfac interface {
 	Send(clock *model.Clocks) error
 }
 
-func SendMail(mail EmailInterfac) {
-	var clock model.Clocks
-	global.Backend_DB.Where(" id = ?", 152).First(&clock)
-	mail.Send(&clock)
-
+func SendMail(mail EmailInterfac, clock *model.Clocks) {
+	mail.Send(clock)
 }
 
 type QQMail struct {

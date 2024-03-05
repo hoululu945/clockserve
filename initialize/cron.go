@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/robfig/cron/v3"
-	"gopkg.in/gomail.v2"
 	"log"
 	"net/smtp"
 	"serve/global"
@@ -306,45 +305,46 @@ func encodeWord(word string) string {
 	return "=?UTF-8?B?" + encoded + "?="
 }
 func sendWangyiMail(clock *model.Clocks) {
-	fmt.Println("开始发了wy*****************************")
-	var user model.Users
-	global.Backend_DB.First(&user, map[string]interface{}{"mini_openid": clock.Openid})
-
-	msg := gomail.NewMessage()
-	msg.SetHeader("From", "houlu0621@163.com")
-	msg.SetHeader("To", user.Email)
-	msg.SetHeader("Subject", clock.Title)
-	msg.SetBody("text/html", clock.Describe)
-	// msg.Attach("/home/User/cat.jpg")
-
-	n := gomail.NewDialer("smtp.163.com", 465, "houlu0621@163.com", "LLVEGRWZVSQISDOH")
-	// Send the email
-	if err := n.DialAndSend(msg); err != nil {
-		log.Println("邮件发送失败:", err)
-	}
-	reminderType := clock.ReminderType
-	if reminderType != 0 && clock.IsCircle == 1 {
-		duration := time.Second
-		switch reminderType {
-		case 1:
-			duration = 24 * 60 * 60 * time.Second
-		case 2:
-			duration = 24 * 60 * 60 * 7 * time.Second
-		case 3:
-			duration = 24 * 60 * 60 * 30 * time.Second
-		case 4:
-			duration = 24 * 60 * 60 * 365 * time.Second
-		}
-		err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
-		if err == nil {
-			fmt.Println("wy添加新的循环成功成功！", duration)
-		}
-
-	}
-	clock.IsTip = 1
-	global.Backend_DB.Save(clock)
-
-	log.Println("邮件发送成功！")
+	common.SendMail(new(common.WyMail), clock)
+	//fmt.Println("开始发了wy*****************************")
+	//var user model.Users
+	//global.Backend_DB.First(&user, map[string]interface{}{"mini_openid": clock.Openid})
+	//
+	//msg := gomail.NewMessage()
+	//msg.SetHeader("From", "houlu0621@163.com")
+	//msg.SetHeader("To", user.Email)
+	//msg.SetHeader("Subject", clock.Title)
+	//msg.SetBody("text/html", clock.Describe)
+	//// msg.Attach("/home/User/cat.jpg")
+	//
+	//n := gomail.NewDialer("smtp.163.com", 465, "houlu0621@163.com", "LLVEGRWZVSQISDOH")
+	//// Send the email
+	//if err := n.DialAndSend(msg); err != nil {
+	//	log.Println("邮件发送失败:", err)
+	//}
+	//reminderType := clock.ReminderType
+	//if reminderType != 0 && clock.IsCircle == 1 {
+	//	duration := time.Second
+	//	switch reminderType {
+	//	case 1:
+	//		duration = 24 * 60 * 60 * time.Second
+	//	case 2:
+	//		duration = 24 * 60 * 60 * 7 * time.Second
+	//	case 3:
+	//		duration = 24 * 60 * 60 * 30 * time.Second
+	//	case 4:
+	//		duration = 24 * 60 * 60 * 365 * time.Second
+	//	}
+	//	err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+	//	if err == nil {
+	//		fmt.Println("wy添加新的循环成功成功！", duration)
+	//	}
+	//
+	//}
+	//clock.IsTip = 1
+	//global.Backend_DB.Save(clock)
+	//
+	//log.Println("邮件发送成功！")
 }
 func sendEmail(clock *model.Clocks) {
 	fmt.Println("开始发了*****************************")
