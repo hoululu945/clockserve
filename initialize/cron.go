@@ -312,7 +312,7 @@ func sendWangyiMail(clock *model.Clocks) {
 
 	msg := gomail.NewMessage()
 	msg.SetHeader("From", "houlu0621@163.com")
-	msg.SetHeader("To", "1650221128@qq.com")
+	msg.SetHeader("To", user.Email)
 	msg.SetHeader("Subject", clock.Title)
 	msg.SetBody("text/html", clock.Describe)
 	// msg.Attach("/home/User/cat.jpg")
