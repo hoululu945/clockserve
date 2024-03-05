@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// 封装
 type EmailInterfac interface {
 	Send(clock *model.Clocks) error
 }
