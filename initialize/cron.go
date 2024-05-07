@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/robfig/cron/v3"
+	"regexp"
 	"serve/global"
 	"serve/model"
 	"serve/service/common"
@@ -18,7 +19,7 @@ var c = cron.New(cron.WithLocation(loc))
 func cronTime() {
 	weatherTip()
 }
-func weathertitle(str string) string {
+func Weathertitle(str string) string {
 	var title string
 
 	s := strings.Split(str, "")
@@ -30,16 +31,34 @@ func weathertitle(str string) string {
 			break
 		}
 	}
-	temper, _ := strconv.Atoi(s[index])
-	temperLow, _ := strconv.Atoi(s[index-2])
 
-	if temper <= 2 {
-		title += "最高温度低于3度记得加衣 "
+	//
+	//temper, _ := strconv.Atoi(s[index])
+	//temperLow, _ := strconv.Atoi(s[index-2])
+
+	// 定义正则表达式，匹配温度数字
+	//re := regexp.MustCompile(`(\d+)~(\d+)℃`)
+	re := regexp.MustCompile(`(-?\d+)~(-?\d+)℃`)
+
+	// 查找匹配的子串
+	match := re.FindStringSubmatch(str)
+
+	// 如果匹配成功，提取温度数字
+	if len(match) == 3 {
+		temperLow, _ := strconv.Atoi(match[1]) // 最低温度
+		temper, _ := strconv.Atoi(match[2])    // 最高温度
+		fmt.Printf("最低温度：%s℃，最高温度：%s℃\n", temperLow, temper)
+		if temper <= 2 {
+			title += "最高温度低于3度记得加衣 "
+		}
+		fmt.Println(s[index-3], s[index-2], s[index-1], s[index], s[index+1], s, "**********************************")
+		if temperLow < 0 {
+			title += fmt.Sprintf(" 最低温度零下%d摄氏度记得加衣 ", temperLow)
+		}
+	} else {
+		fmt.Println("未找到温度信息")
 	}
-	fmt.Println(s[index-3], s[index-2], s[index-1], s[index], s[index+1], s, "**********************************")
-	if temperLow > 0 && s[index-3] == "-" {
-		title += fmt.Sprintf(" 最低温度零下%d摄氏度记得加衣 ", temperLow)
-	}
+
 	if strings.Contains(str, "雨") {
 		title += "有雨出门记得带伞"
 		if strings.Contains(str, "中雨") {
@@ -86,7 +105,7 @@ func weatherTip() {
 			clock.TipImage = weather.Sons[1].Image
 			clock.Openid = ""
 			clock.Describe = weather.Sons[1].Date + "" + weather.Sons[1].Cloud
-			title := weathertitle(weather.Sons[1].Cloud)
+			title := Weathertitle(weather.Sons[1].Cloud)
 			fmt.Println("title--------" + title + "*****" + weather.Sons[1].Cloud)
 			if title != "" {
 				clock.Title = title
