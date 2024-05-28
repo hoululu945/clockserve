@@ -1,7 +1,6 @@
 package common
 
 import (
-	"context"
 	"encoding/base64"
 	"fmt"
 	"gopkg.in/gomail.v2"
@@ -9,7 +8,7 @@ import (
 	"net/smtp"
 	"serve/global"
 	"serve/model"
-	"strconv"
+	"serve/service/amqp"
 	"strings"
 	"time"
 )
@@ -171,8 +170,10 @@ func CircleSet(clock *model.Clocks) {
 		case 4:
 			duration = 24 * 60 * 60 * 365 * time.Second
 		}
-		err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
-		if err == nil {
+		err1 := amqp.Publish(clock.ID, duration)
+		//fmt.Println(err1)
+		//err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+		if err1 == nil {
 			fmt.Println("wy添加新的循环成功成功！", duration)
 		}
 
