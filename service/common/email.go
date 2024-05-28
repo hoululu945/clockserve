@@ -1,6 +1,7 @@
 package common
 
 import (
+	"context"
 	"encoding/base64"
 	"fmt"
 	"gopkg.in/gomail.v2"
@@ -8,7 +9,7 @@ import (
 	"net/smtp"
 	"serve/global"
 	"serve/model"
-	"serve/service/amqp"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -63,14 +64,14 @@ func (q *QQMail) Send(clock *model.Clocks) error {
 	if err != nil {
 		log.Println("邮件发送失败:", err)
 	}
-	CircleSet(clock)
+	//CircleSet(clock)
 
 	log.Println("邮件发送成功！")
 
 	return nil
 }
 func (q *WyMail) Send(clock *model.Clocks) error {
-	fmt.Println("1122开始发了wy*****************************1")
+	fmt.Println("开始发了wy*****************************")
 	var user model.Users
 	global.Backend_DB.First(&user, map[string]interface{}{"mini_openid": clock.Openid})
 
@@ -87,7 +88,7 @@ func (q *WyMail) Send(clock *model.Clocks) error {
 		log.Println("邮件发送失败:", err)
 	}
 
-	CircleSet(clock)
+	//CircleSet(clock)
 	log.Println("邮件发送成功！")
 	return nil
 }
@@ -151,7 +152,7 @@ func (q *GoogleMail) Send(clock *model.Clocks) error {
 	if err != nil {
 		fmt.Println("邮件发失败！" + err.Error())
 	}
-	CircleSet(clock)
+	//CircleSet(clock)
 	fmt.Println("邮件发送成功！")
 	return nil
 }
@@ -170,10 +171,10 @@ func CircleSet(clock *model.Clocks) {
 		case 4:
 			duration = 24 * 60 * 60 * 365 * time.Second
 		}
-		err1 := amqp.Publish(clock.ID, duration)
+		//err1 := amqp.Publish(clock.ID, duration)
 		//fmt.Println(err1)
-		//err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
-		if err1 == nil {
+		err := global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(clock.ID)), clock.ID, duration).Err()
+		if err == nil {
 			fmt.Println("wy添加新的循环成功成功！", duration)
 		}
 

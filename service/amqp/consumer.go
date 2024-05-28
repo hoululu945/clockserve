@@ -8,6 +8,7 @@ import (
 	"serve/global"
 	"serve/model"
 	"serve/service/common"
+	"time"
 )
 
 func NewConsumer() error {
@@ -72,7 +73,7 @@ func NewConsumer() error {
 			global.Backend_DB.Save(clock)
 			//sendWangyiMail(&clock)
 			common.SendMail(new(common.WyMail), &clock)
-
+			CircleSet(&clock)
 			d.Ack(false)
 		}
 		log.Printf("handle: deliveries channel closed")
@@ -80,5 +81,29 @@ func NewConsumer() error {
 	}(consume, ch.done)
 	log.Printf("running forever")
 	return nil
+
+}
+func CircleSet(clock *model.Clocks) {
+	reminderType := clock.ReminderType
+	if reminderType != 0 && clock.IsCircle == 1 {
+		duration := time.Second
+		switch reminderType {
+		case 1:
+			duration = 24 * 60 * 60 * time.Second
+		case 2:
+			duration = 24 * 60 * 60 * 7 * time.Second
+		case 3:
+			duration = 24 * 60 * 60 * 30 * time.Second
+		case 4:
+			duration = 24 * 60 * 60 * 365 * time.Second
+		}
+		err1 := Publish(clock.ID, duration)
+		if err1 == nil {
+			fmt.Println("wy添加新的循环成功成功！", duration)
+		}
+
+	}
+	clock.IsTip = 1
+	global.Backend_DB.Save(clock)
 
 }
