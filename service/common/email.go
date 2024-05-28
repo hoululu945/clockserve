@@ -70,7 +70,7 @@ func (q *QQMail) Send(clock *model.Clocks) error {
 	return nil
 }
 func (q *WyMail) Send(clock *model.Clocks) error {
-	fmt.Println("1开始发了wy*****************************1")
+	fmt.Println("11开始发了wy*****************************1")
 	var user model.Users
 	global.Backend_DB.First(&user, map[string]interface{}{"mini_openid": clock.Openid})
 
