@@ -71,7 +71,6 @@ func NewConsumer() error {
 			common.CommonService.PubClock(&clock)
 			clock.IsTip = 1
 			global.Backend_DB.Save(clock)
-			//sendWangyiMail(&clock)
 			common.SendMail(new(common.WyMail), &clock)
 			CircleSet(&clock)
 			d.Ack(false)
