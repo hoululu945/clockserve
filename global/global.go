@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/streadway/amqp"
 	"gorm.io/gorm"
 	"serve/config"
 )
@@ -10,4 +11,5 @@ var (
 	Backend_DB    *gorm.DB
 	Backend_REDIS *redis.Client
 	GVA_CONFIG    config.Server
+	RBBITMQ_CON   *amqp.Connection
 )

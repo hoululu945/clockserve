@@ -154,7 +154,7 @@ func everySecond() {
 		global.Backend_DB.Where("tip_time=? and is_tip=? and type=?", tipTimeDate+":00:00", 0, 1).Find(&Clocks)
 		for _, v := range Clocks {
 			if v.ID != 0 {
-				sendWangyiMail(&v)
+				SendWangyiMail(&v)
 
 			}
 		}
@@ -186,7 +186,7 @@ func rangeClock() {
 		//clo.
 		clo.IsTip = 1
 		global.Backend_DB.Save(clo)
-		sendWangyiMail(&clo)
+		SendWangyiMail(&clo)
 
 		common.CommonService.PubClock(&clo)
 	}
@@ -226,8 +226,8 @@ func subRedisKeyExpir() {
 			common.CommonService.PubClock(&clock)
 			clock.IsTip = 1
 			global.Backend_DB.Save(clock)
-			//sendWangyiMail(&clock)
-			sendWangyiMail(&clock)
+			//SendWangyiMail(&clock)
+			SendWangyiMail(&clock)
 
 		}
 	}
@@ -235,6 +235,6 @@ func subRedisKeyExpir() {
 	// 关闭订阅者
 }
 
-func sendWangyiMail(clock *model.Clocks) {
+func SendWangyiMail(clock *model.Clocks) {
 	common.SendMail(new(common.WyMail), clock)
 }

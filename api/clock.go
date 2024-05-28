@@ -1,13 +1,13 @@
 package api
 
 import (
-	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/smtp"
 	"serve/global"
 	"serve/model"
+	"serve/service/amqp"
 	"strconv"
 	"strings"
 	"time"
@@ -194,8 +194,10 @@ func (cl Clock) Add(c *gin.Context) {
 	duration := tipTimeDate.Sub(now)
 	fmt.Println(tipTimeDate, now)
 	fmt.Println(duration)
-	err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks.ID)), Clocks.ID, duration).Err()
-	fmt.Println("err----", err)
+	err1 = amqp.Publish(Clocks.ID, duration)
+	fmt.Println(err1)
+	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks.ID)), Clocks.ID, duration).Err()
+	//fmt.Println("err----", err)
 
 	c.JSON(0, Clocks)
 }
