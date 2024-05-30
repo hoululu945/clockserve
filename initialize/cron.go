@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"serve/global"
 	"serve/model"
+	"serve/service"
 	"serve/service/common"
 	"strconv"
 	"strings"
@@ -97,7 +98,7 @@ func weatherTip() {
 
 	c.AddFunc("0 20 * * *", func() {
 
-		weather := common.WeatherService.Weather("/7/")
+		weather := service.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
 		if len(weather.Sons) >= 1 {
 			var clock model.Clocks
@@ -114,7 +115,7 @@ func weatherTip() {
 				global.Backend_DB.Find(&users)
 				for _, v := range users {
 					clock.Openid = v.MiniOpenid
-					common.WeatherService.Add(clock)
+					service.WeatherService.Add(clock)
 				}
 			}
 		}
