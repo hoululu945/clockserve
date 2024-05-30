@@ -131,8 +131,8 @@ func InitCron() {
 	//go runCron()
 	//定时任务
 	go cronTime()
-	go subRedisKeyExpir()
-	go everySecond()
+	//go subRedisKeyExpir()
+	//go everySecond()
 }
 func everySecond() {
 	//loc, err := time.LoadLocation("Asia/Shanghai") // 加载本地时区位置

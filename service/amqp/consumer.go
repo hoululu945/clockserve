@@ -50,15 +50,6 @@ func NewConsumer() error {
 				d.DeliveryTag,
 				d.Body,
 			)
-			//clock := model.Clocks{}
-			//atoi, _ := strconv.Atoi(stringSplice[1])
-			//clockId := atoi
-			//global.Backend_DB.First(&clock, map[string]interface{}{"id": clockId})
-			//common.CommonService.PubClock(&clock)
-			//clock.IsTip = 1
-			//global.Backend_DB.Save(clock)
-			////sendWangyiMail(&clock)
-			//sendWangyiMail(&clock)
 			var bodyMap map[string]interface{}
 			err2 := json.Unmarshal(d.Body, &bodyMap)
 			if err2 != nil {
