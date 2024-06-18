@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"serve/config"
 	"serve/initialize"
+	"serve/pkg/logger"
 	"serve/service/amqp"
 )
 
 func RunServer1() {
+	logger.Init()
 	Router := initialize.Routers()
 	initialize.InitRedis1()
 	initialize.InitCron()

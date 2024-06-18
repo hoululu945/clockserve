@@ -97,7 +97,7 @@ func weatherTip() {
 	//c := cron.New(cron.WithLocation(loc))
 
 	c.AddFunc("0 20 * * *", func() {
-
+		global.LOGGER.Info("开始获取天气信息")
 		weather := service.WeatherService.Weather("/7/")
 		fmt.Println("获取天气长度----", len(weather.Sons))
 		if len(weather.Sons) >= 1 {

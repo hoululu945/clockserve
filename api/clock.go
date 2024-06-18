@@ -194,6 +194,8 @@ func (cl Clock) Add(c *gin.Context) {
 	duration := tipTimeDate.Sub(now)
 	fmt.Println(tipTimeDate, now)
 	fmt.Println(duration)
+	global.LOGGER.Info("添加闹钟信息", "闹钟title", Clocks.Title, "过期时间：", duration)
+
 	err1 = amqp.Publish(Clocks.ID, duration)
 	fmt.Println(err1)
 	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks.ID)), Clocks.ID, duration).Err()

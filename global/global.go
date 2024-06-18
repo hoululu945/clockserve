@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
 	"gorm.io/gorm"
 	"serve/config"
@@ -12,4 +13,5 @@ var (
 	Backend_REDIS *redis.Client
 	GVA_CONFIG    config.Server
 	RBBITMQ_CON   *amqp.Connection
+	LOGGER        *logrus.Logger
 )
