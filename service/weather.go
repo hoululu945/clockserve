@@ -157,6 +157,7 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	duration := tipTimeDate1.Sub(now)
 	fmt.Println(duration)
 	err1 = amqp.Publish(Clocks1.ID, duration)
+	global.LOGGER.Info("openid", Clocks1.Openid, "title", Clocks1.Title, "过期时间", duration)
 	fmt.Println(err1)
 	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks1.ID)), Clocks1.ID, duration).Err()
 	//第二天提醒
@@ -172,6 +173,8 @@ func (w *weatherStruct) Add(clockData model2.Clocks) {
 	duration2 := tipTimeDate2.Sub(now)
 	fmt.Println(duration2)
 	err1 = amqp.Publish(Clocks2.ID, duration2)
+	global.LOGGER.Info("openid", Clocks2.Openid, "title", Clocks2.Title, "过期时间", duration2)
+
 	fmt.Println(err1)
 	//err = global.Backend_REDIS.Set(context.Background(), "clock_id:"+strconv.Itoa(int(Clocks2.ID)), Clocks2.ID, duration2).Err()
 
