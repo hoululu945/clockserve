@@ -10,7 +10,7 @@ import (
 //var RabbitMq *amqp.Connection
 
 func InitRabbitmq() {
-	// 连接到RabbitMQ服务器
+	// 连接到RabbitMQ服务器1
 	conn, err := amqp.Dial("amqp://guest:guest@120.27.159.64:5672/")
 	if err != nil {
 		failOnError(err, "Failed to connect to RabbitMQ")
