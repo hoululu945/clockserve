@@ -4,13 +4,13 @@
 set -e
 
 # 定义变量
-BUILD_DIR="build"
-DEPLOY_DIR="deploy"
+BUILD_DIR="./"
+DEPLOY_DIR="./"
 EXECUTABLE="your_executable_name"  # 替换为编译后的可执行文件名称2
 SERVICE_NAME="$EXECUTABLE"           # 将服务名称设置为可执行文件名称1
 
 # 检查并创建构建目录
-mkdir -p "$BUILD_DIR"
+#mkdir -p "$BUILD_DIR"
 
 # 构建 Go 项目
 echo "开始构建 Go 项目..."
@@ -28,7 +28,7 @@ fi
 
 # 复制构建物到部署目录
 echo "开始复制构建物到部署目录..."
-mkdir -p "$DEPLOY_DIR"
+#mkdir -p "$DEPLOY_DIR"
 
 # 停止服务
 echo "停止服务 $SERVICE_NAME..."
