@@ -6,8 +6,8 @@ set -e
 # 定义变量
 BUILD_DIR="build"
 DEPLOY_DIR="deploy"
-EXECUTABLE="your_executable_name"  # 替换为编译后的可执行文件名称
-SERVICE_NAME="$EXECUTABLE"           # 将服务名称设置为可执行文件名称
+EXECUTABLE="your_executable_name"  # 替换为编译后的可执行文件名称2
+SERVICE_NAME="$EXECUTABLE"           # 将服务名称设置为可执行文件名称1
 
 # 检查并创建构建目录
 mkdir -p "$BUILD_DIR"
