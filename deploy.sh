@@ -14,10 +14,10 @@ mkdir -p "$BUILD_DIR"
 
 # 构建 Go 项目
 echo "开始构建 Go 项目..."
-if [ ! -f go.mod ]; then
-    go mod init serve
-fi
-go mod tidy
+#if [ ! -f go.mod ]; then
+#    go mod init serve
+#fi
+#go mod tidy
 go build -o "$BUILD_DIR/$EXECUTABLE" main.go
 
 # 检查构建物是否存在
@@ -32,7 +32,7 @@ mkdir -p "$DEPLOY_DIR"
 
 # 停止服务
 echo "停止服务 $SERVICE_NAME..."
-systemctl stop your_executable_name || echo "服务 your_executable_name 停止失败，可能未运行。"
+#systemctl stop your_executable_name || echo "服务 your_executable_name 停止失败，可能未运行。"
 
 # 强制停止进程（如果服务未能停止）
 pkill -f "$EXECUTABLE" || echo "未找到正在运行的进程，继续复制..."
