@@ -14,6 +14,7 @@ mkdir -p "$BUILD_DIR"
 
 # 构建 Go 项目
 echo "开始构建 Go 项目..."
+go mod tidy
 go build -o "$BUILD_DIR/$EXECUTABLE" main.go
 
 # 检查构建物是否存在
