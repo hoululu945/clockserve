@@ -14,7 +14,9 @@ mkdir -p "$BUILD_DIR"
 
 # 构建 Go 项目
 echo "开始构建 Go 项目..."
-go mod init serve
+if [ ! -f go.mod ]; then
+    go mod init serve
+fi
 go mod tidy
 go build -o "$BUILD_DIR/$EXECUTABLE" main.go
 
