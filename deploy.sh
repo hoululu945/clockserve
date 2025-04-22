@@ -15,7 +15,7 @@ echo "开始构建 Go 项目..."
 #if [ ! -f go.mod ]; then
 #    go mod init serve
 #fi
-#go mod tidy
+go mod tidy
 
 
 # 复制构建物到部署目录
@@ -40,6 +40,7 @@ if [ ! -f "$EXECUTABLE" ]; then
     echo "构建失败，未找到可执行文件 $EXECUTABLE"
     exit 1
 fi
+go mod tidy
 
 # 启动服务
 echo "启动服务 $SERVICE_NAME..."
